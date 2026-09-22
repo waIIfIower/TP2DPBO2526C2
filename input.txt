@@ -1,0 +1,10 @@
+ID: L06
+Merk: Dell
+Harga: 14000000
+Link Foto: img/dell.png
+Kategori: Laptop
+No Seri: SN06
+Tahun: 2024
+Prosesor: Intel-i7
+RAM: 16GB
+Layar: 14.0
