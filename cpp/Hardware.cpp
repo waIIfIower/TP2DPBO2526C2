@@ -1,7 +1,7 @@
 #pragma once
 #include "ProdukIT.cpp"
 
-// Intermediary Class: Mewarisi ProdukIT, memperluas sifat produk fisik (Level 2)
+// Intermediary Class (Level 2): Turunan dari ProdukIT untuk kelompok perangkat keras
 class Hardware : public ProdukIT {
 private:
     string kategori;
@@ -9,25 +9,23 @@ private:
     int tahunRilis;
 
 public:
-    // Konstruktor Hardware juga memanggil konstruktor ProdukIT (Parent) 
-    // untuk memastikan atribut dasar ikut terinisialisasi
-    Hardware(string id, string m, int h, string k, string ns, int tr) 
+    // Konstruktor Hardware meneruskan atribut umum ke ProdukIT melalui initializer list
+    Hardware(string id, string m, long long h, string k, string ns, int tr) 
         : ProdukIT(id, m, h) {
         this->kategori = k;
         this->nomorSeri = ns;
         this->tahunRilis = tr;
     }
     
-    // Destruktor untuk membersihkan instance Hardware
     ~Hardware() {}
 
-    // Getters
+    // Accessor Methods
     string getKategori() { return kategori; }
-    string getNomorSeri() { return nomorSeri; }
-    int getTahunRilis() { return tahunRilis; }
-
-    // Setters
     void setKategori(string k) { this->kategori = k; }
+
+    string getNomorSeri() { return nomorSeri; }
     void setNomorSeri(string ns) { this->nomorSeri = ns; }
+
+    int getTahunRilis() { return tahunRilis; }
     void setTahunRilis(int tr) { this->tahunRilis = tr; }
 };
