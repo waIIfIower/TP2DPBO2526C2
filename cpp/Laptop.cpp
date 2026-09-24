@@ -44,9 +44,4 @@ public:
              << " | " << setw(w[7]) << kapasitasRam 
              << " | " << setw(w[8]) << ukuranLayar << " |" << endl;
     }
-};    {
-        cout << "| " << getIdProduk() << "\t| " << getMerk() << "\t| " << getHargaDasar() << "\t| "
-             << getKategori() << "\t| " << getNomorSeri() << "\t| " << getTahunRilis() << "\t| "
-             << jenisProsesor << "\t| " << kapasitasRam << "\t| " << ukuranLayar << " |" << endl;
-    }
 };

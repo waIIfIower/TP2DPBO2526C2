@@ -1,24 +1,22 @@
 // Base Class (Level 1)
 public class ProdukIT {
-    // Access modifier private memastikan data tidak bisa diubah langsung dari luar class
     private String idProduk;
     private String merk;
-    private int hargaDasar;
+    private long hargaDasar; // Tipe long untuk menampung nominal angka besar
 
-    // Konstruktor utama untuk ProdukIT
-    public ProdukIT(String idProduk, String merk, int hargaDasar) {
+    public ProdukIT(String idProduk, String merk, long hargaDasar) {
         this.idProduk = idProduk;
         this.merk = merk;
         this.hargaDasar = hargaDasar;
     }
 
-    // Getters and Setters: Pintu akses resmi untuk manipulasi atribut
+    // Accessor Methods
     public String getIdProduk() { return idProduk; }
     public void setIdProduk(String idProduk) { this.idProduk = idProduk; }
 
     public String getMerk() { return merk; }
     public void setMerk(String merk) { this.merk = merk; }
 
-    public int getHargaDasar() { return hargaDasar; }
-    public void setHargaDasar(int hargaDasar) { this.hargaDasar = hargaDasar; }
+    public long getHargaDasar() { return hargaDasar; }
+    public void setHargaDasar(long hargaDasar) { this.hargaDasar = hargaDasar; }
 }

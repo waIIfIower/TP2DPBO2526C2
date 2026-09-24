@@ -1,19 +1,16 @@
-// Intermediary Class (Level 2) - Keyword 'extends' merepresentasikan pewarisan
+// Intermediary Class (Level 2)
 public class Hardware extends ProdukIT {
     private String kategori;
     private String nomorSeri;
     private int tahunRilis;
 
-    public Hardware(String idProduk, String merk, int hargaDasar, String kategori, String nomorSeri, int tahunRilis) {
-        // Keyword 'super' wajib diletakkan di baris pertama konstruktor 
-        // untuk memanggil konstruktor class induk (ProdukIT)
+    public Hardware(String idProduk, String merk, long hargaDasar, String kategori, String nomorSeri, int tahunRilis) {
         super(idProduk, merk, hargaDasar);
         this.kategori = kategori;
         this.nomorSeri = nomorSeri;
         this.tahunRilis = tahunRilis;
     }
 
-    // Getters and Setters
     public String getKategori() { return kategori; }
     public void setKategori(String kategori) { this.kategori = kategori; }
 

@@ -1,18 +1,17 @@
-// Derived Class (Level 3) - Turunan paling spesifik dari Hardware
+// Derived Class (Level 3)
 public class Laptop extends Hardware {
     private String jenisProsesor;
     private String kapasitasRam;
     private String ukuranLayar;
 
-    public Laptop(String idProduk, String merk, int hargaDasar, String kategori, String nomorSeri, int tahunRilis, String jenisProsesor, String kapasitasRam, String ukuranLayar) {
-        // Memanggil konstruktor Hardware
-        super(idProduk, merk, hargaDasar, kategori, nomorSeri, tahunRilis);
+    // Parameter kategori dicabut, digantikan hardcode "Laptop" pada super()
+    public Laptop(String idProduk, String merk, long hargaDasar, String nomorSeri, int tahunRilis, String jenisProsesor, String kapasitasRam, String ukuranLayar) {
+        super(idProduk, merk, hargaDasar, "Laptop", nomorSeri, tahunRilis);
         this.jenisProsesor = jenisProsesor;
         this.kapasitasRam = kapasitasRam;
         this.ukuranLayar = ukuranLayar;
     }
 
-    // Getters and Setters
     public String getJenisProsesor() { return jenisProsesor; }
     public void setJenisProsesor(String jenisProsesor) { this.jenisProsesor = jenisProsesor; }
 
@@ -22,9 +21,9 @@ public class Laptop extends Hardware {
     public String getUkuranLayar() { return ukuranLayar; }
     public void setUkuranLayar(String ukuranLayar) { this.ukuranLayar = ukuranLayar; }
 
-    // Method untuk mencetak format baris tabel menggunakan System.out.printf
-    public void printRow() {
-        System.out.printf("| %-5s | %-10s | %-10d | %-10s | %-10s | %-6d | %-12s | %-5s | %-6s |\n",
-                getIdProduk(), getMerk(), getHargaDasar(), getKategori(), getNomorSeri(), getTahunRilis(), getJenisProsesor(), getKapasitasRam(), getUkuranLayar());
+    // Output baris berformat dinamis
+    public void printRow(int[] w) {
+        String format = "| %-" + w[0] + "s | %-" + w[1] + "s | %-" + w[2] + "d | %-" + w[3] + "s | %-" + w[4] + "s | %-" + w[5] + "d | %-" + w[6] + "s | %-" + w[7] + "s | %-" + w[8] + "s |\n";
+        System.out.printf(format, getIdProduk(), getMerk(), getHargaDasar(), getKategori(), getNomorSeri(), getTahunRilis(), getJenisProsesor(), getKapasitasRam(), getUkuranLayar());
     }
 }

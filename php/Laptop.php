@@ -7,31 +7,29 @@ class Laptop extends Hardware {
     private $kapasitasRam;
     private $ukuranLayar;
 
-    public function __construct($idProduk, $merk, $hargaDasar, $fotoProduk, $kategori, $nomorSeri, $tahunRilis, $jenisProsesor, $kapasitasRam, $ukuranLayar) {
-        // Pemanggilan konstruktor berantai ke kelas Hardware
-        parent::__construct($idProduk, $merk, $hargaDasar, $fotoProduk, $kategori, $nomorSeri, $tahunRilis);
+    // Hardcode "Laptop" diteruskan ke kelas Hardware
+    public function __construct($idProduk, $merk, $hargaDasar, $fotoProduk, $nomorSeri, $tahunRilis, $jenisProsesor, $kapasitasRam, $ukuranLayar) {
+        parent::__construct($idProduk, $merk, $hargaDasar, $fotoProduk, "Laptop", $nomorSeri, $tahunRilis);
         $this->jenisProsesor = $jenisProsesor;
         $this->kapasitasRam = $kapasitasRam;
         $this->ukuranLayar = $ukuranLayar;
     }
 
-    // Getters
     public function getJenisProsesor() { return $this->jenisProsesor; }
-    public function getKapasitasRam() { return $this->kapasitasRam; }
-    public function getUkuranLayar() { return $this->ukuranLayar; }
-
-    // Setters
     public function setJenisProsesor($jenisProsesor) { $this->jenisProsesor = $jenisProsesor; }
+
+    public function getKapasitasRam() { return $this->kapasitasRam; }
     public function setKapasitasRam($kapasitasRam) { $this->kapasitasRam = $kapasitasRam; }
+
+    public function getUkuranLayar() { return $this->ukuranLayar; }
     public function setUkuranLayar($ukuranLayar) { $this->ukuranLayar = $ukuranLayar; }
 
-    // Metode pengembalian string HTML <tr> untuk dinamisasi tabel web
     public function getRow() {
         return "<tr>
             <td>{$this->getIdProduk()}</td>
             <td><img src='{$this->getFotoProduk()}' width='50' alt='foto'></td>
             <td>{$this->getMerk()}</td>
-            <td>Rp " . number_format($this->getHargaDasar(), 0, ',', '.') . "</td>
+            <td>Rp " . number_format((float)$this->getHargaDasar(), 0, ',', '.') . "</td>
             <td>{$this->getKategori()}</td>
             <td>{$this->getNomorSeri()}</td>
             <td>{$this->getTahunRilis()}</td>
