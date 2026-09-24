@@ -3,33 +3,32 @@
 #include <string>
 using namespace std;
 
-// Base Class: Mewakili entitas produk secara umum (Level 1)
+// Base Class (Level 1): Kelas induk utama yang merepresentasikan entitas produk umum
 class ProdukIT {
 private:
-    // Enkapsulasi ketat: Atribut hanya bisa diakses dari dalam class ini
+    // Enkapsulasi: Properti bersifat private agar tidak dapat diakses langsung dari luar
     string idProduk;
     string merk;
-    int hargaDasar;
+    long long hargaDasar; // Menggunakan long long untuk mencegah integer overflow (dukungan >2 miliar)
 
 public:
-    // Konstruktor untuk menginisialisasi state awal objek ProdukIT
-    ProdukIT(string id, string m, int h) {
+    // Konstruktor utama untuk mengalokasikan dan menginisialisasi properti dasar
+    ProdukIT(string id, string m, long long h) {
         this->idProduk = id;
         this->merk = m;
         this->hargaDasar = h;
     }
     
-    // Virtual Destructor: Sangat krusial dalam C++ OOP agar saat objek 
-    // turunan dihapus (delete), memori class induk juga ikut terbebaskan
+    // Virtual Destructor: Menjamin pelepasan memori kelas induk saat objek turunan dihapus
     virtual ~ProdukIT() {}
 
-    // Getters: Mengambil nilai atribut private
+    // Accessor Methods (Getters & Setters)
     string getIdProduk() { return idProduk; }
-    string getMerk() { return merk; }
-    int getHargaDasar() { return hargaDasar; }
-
-    // Setters: Memodifikasi nilai atribut private dengan aman
     void setIdProduk(string id) { this->idProduk = id; }
+
+    string getMerk() { return merk; }
     void setMerk(string m) { this->merk = m; }
-    void setHargaDasar(int h) { this->hargaDasar = h; }
+
+    long long getHargaDasar() { return hargaDasar; }
+    void setHargaDasar(long long h) { this->hargaDasar = h; }
 };
