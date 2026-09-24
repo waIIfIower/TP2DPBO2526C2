@@ -1,65 +1,152 @@
 #include <iostream>
 #include <vector>
+#include <limits>
+#include <iomanip>
+#include <algorithm>
+#include <string>
 #include "Laptop.cpp"
 using namespace std;
 
-// Fungsi terpisah untuk mencetak seluruh isi vector ke dalam format tabel dinamis
+// Sub-rutin untuk merender tabel dinamis berdasarkan string terpanjang
 void printTable(const vector<Laptop*>& list) {
-    cout << "\n----------------------------------------------------------------------------------------------------------\n";
-    cout << "| ID\t| Merk\t| Harga\t\t| Kategori\t| No. Seri\t| Tahun\t| Prosesor\t| RAM\t| Layar\t |\n";
-    cout << "----------------------------------------------------------------------------------------------------------\n";
-    // Iterasi memanggil method printRow dari masing-masing objek Laptop
+    // Array penampung lebar minimum berdasarkan judul kolom
+    int w[9] = {2, 4, 5, 8, 8, 5, 8, 3, 5}; 
+
+    // Mencari panjang karakter maksimum di seluruh isi data
     for (size_t i = 0; i < list.size(); i++) {
-        list[i]->printRow();
+        w[0] = max(w[0], (int)list[i]->getIdProduk().length());
+        w[1] = max(w[1], (int)list[i]->getMerk().length());
+        w[2] = max(w[2], (int)to_string(list[i]->getHargaDasar()).length());
+        w[3] = max(w[3], (int)list[i]->getKategori().length());
+        w[4] = max(w[4], (int)list[i]->getNomorSeri().length());
+        w[5] = max(w[5], (int)to_string(list[i]->getTahunRilis()).length());
+        w[6] = max(w[6], (int)list[i]->getJenisProsesor().length());
+        w[7] = max(w[7], (int)list[i]->getKapasitasRam().length());
+        w[8] = max(w[8], (int)list[i]->getUkuranLayar().length());
     }
-    cout << "----------------------------------------------------------------------------------------------------------\n";
+
+    // Menghitung total lebar garis pemisah
+    int totalWidth = w[0]+w[1]+w[2]+w[3]+w[4]+w[5]+w[6]+w[7]+w[8] + 28;
+    string separator(totalWidth, '-');
+
+    cout << "\n" << separator << "\n";
+    cout << "| " << left << setw(w[0]) << "ID"
+         << " | " << setw(w[1]) << "Merk"
+         << " | " << setw(w[2]) << "Harga"
+         << " | " << setw(w[3]) << "Kategori"
+         << " | " << setw(w[4]) << "No. Seri"
+         << " | " << setw(w[5]) << "Tahun"
+         << " | " << setw(w[6]) << "Prosesor"
+         << " | " << setw(w[7]) << "RAM"
+         << " | " << setw(w[8]) << "Layar" << " |\n";
+    cout << separator << "\n";
+    
+    for (size_t i = 0; i < list.size(); i++) {
+        list[i]->printRow(w);
+    }
+    cout << separator << "\n";
 }
 
 int main() {
-    // Menggunakan Vector of Pointers untuk mensimulasikan alokasi memori dinamis
+    // Koleksi dinamis menggunakan Vector of Pointers
     vector<Laptop*> daftarLaptop;
     
-    // 5 Objek statis awal sesuai instruksi TP
-    daftarLaptop.push_back(new Laptop("L01", "Apple", 15000000, "Laptop", "SN01", 2024, "M3", "8GB", "13.6"));
-    daftarLaptop.push_back(new Laptop("L02", "Lenovo", 12000000, "Laptop", "SN02", 2023, "Ryzen5", "16GB", "14.0"));
-    daftarLaptop.push_back(new Laptop("L03", "Asus", 18000000, "Laptop", "SN03", 2024, "Intel-i7", "16GB", "15.6"));
-    daftarLaptop.push_back(new Laptop("L04", "HP", 10000000, "Laptop", "SN04", 2022, "Intel-i5", "8GB", "14.0"));
-    daftarLaptop.push_back(new Laptop("L05", "Acer", 9500000, "Laptop", "SN05", 2023, "Ryzen3", "8GB", "14.0"));
+    // Instansiasi 5 objek awal (Kategori otomatis terisi "Laptop")
+    daftarLaptop.push_back(new Laptop("L01", "Apple", 15000000LL, "SN01", 2024, "M3", "8GB", "13.6"));
+    daftarLaptop.push_back(new Laptop("L02", "Lenovo", 12000000LL, "SN02", 2023, "Ryzen5", "16GB", "14.0"));
+    daftarLaptop.push_back(new Laptop("L03", "Asus", 18000000LL, "SN03", 2024, "Intel-i7", "16GB", "15.6"));
+    daftarLaptop.push_back(new Laptop("L04", "HP", 10000000LL, "SN04", 2022, "Intel-i5", "8GB", "14.0"));
+    daftarLaptop.push_back(new Laptop("L05", "Acer", 9500000LL, "SN05", 2023, "Ryzen3", "8GB", "14.0"));
 
-    int n;
-    cout << "Masukkan jumlah data baru yang ingin ditambahkan (0 jika skip): ";
-    cin >> n;
+    int n = 0;
+    
+    // Validasi Input N
+    while (true) {
+        cout << "Masukkan jumlah data tambahan (0 jika skip): ";
+        cin >> n;
+        if (cin.fail() || (cin.peek() != '\n' && cin.peek() != ' ')) {
+            cout << "input salah\n";
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        } else {
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            break;
+        }
+    }
 
-    // Loop untuk menerima input dinamis dari user
     for (int i = 0; i < n; i++) {
-        string id, merk, kat, seri, pros, ram, layar;
-        int harga, tahun;
+        string id, merk, seri, pros, ram, layar;
+        long long harga;
+        int tahun;
         
         cout << "\nData ke-" << i + 1 << endl;
-        cout << "ID: "; cin >> id;
-        cout << "Merk: "; cin >> merk;
-        cout << "Harga: "; cin >> harga;
-        cout << "Kategori: "; cin >> kat;
-        cout << "No Seri: "; cin >> seri;
-        cout << "Tahun: "; cin >> tahun;
-        cout << "Prosesor: "; cin >> pros;
-        cout << "RAM: "; cin >> ram;
-        cout << "Layar: "; cin >> layar;
+        cout << "ID: "; cin >> id; cin.ignore(numeric_limits<streamsize>::max(), '\n');
         
-        // Alokasi memori baru untuk objek yang diinputkan user
-        daftarLaptop.push_back(new Laptop(id, merk, harga, kat, seri, tahun, pros, ram, layar));
+        // Error Handling: Merk TIDAK BOLEH berupa integer murni
+        while (true) {
+            cout << "Merk: "; 
+            cin >> merk;
+            bool isAllDigits = true;
+            for (char c : merk) {
+                if (!isdigit(c)) {
+                    isAllDigits = false;
+                    break;
+                }
+            }
+            if (isAllDigits) {
+                cout << "input salah\n";
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            } else {
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                break;
+            }
+        }
+        
+        // Error Handling: Harga WAJIB berupa angka (tipe long long)
+        while (true) {
+            cout << "Harga: "; 
+            cin >> harga;
+            if (cin.fail() || (cin.peek() != '\n' && cin.peek() != ' ')) {
+                cout << "input salah\n";
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            } else {
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                break;
+            }
+        }
+        
+        cout << "No Seri: "; cin >> seri; cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        
+        // Error Handling: Tahun WAJIB berupa angka
+        while (true) {
+            cout << "Tahun: "; 
+            cin >> tahun;
+            if (cin.fail() || (cin.peek() != '\n' && cin.peek() != ' ')) {
+                cout << "input salah\n";
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            } else {
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                break;
+            }
+        }
+        
+        cout << "Prosesor: "; cin >> pros; cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cout << "RAM: "; cin >> ram; cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cout << "Layar: "; cin >> layar; cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        
+        daftarLaptop.push_back(new Laptop(id, merk, harga, seri, tahun, pros, ram, layar));
     }
 
     printTable(daftarLaptop);
 
-    // MANUAL GARBAGE COLLECTION:
-    // Di C++, memori yang dialokasikan dengan 'new' harus dibebaskan dengan 'delete'
-    // untuk mencegah memory leak.
+    // Garbage Collection Manual
     for (size_t i = 0; i < daftarLaptop.size(); i++) {
         delete daftarLaptop[i];
     }
-    daftarLaptop.clear(); // Mengosongkan kapasitas vector
-    cout << "\n[System] Garbage Collection executed. Memory cleared.\n";
-
+    daftarLaptop.clear();
+    
     return 0;
 }
