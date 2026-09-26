@@ -1,7 +1,8 @@
 from Laptop import Laptop
 
+# Rutinitas merender tabel dinamis berdasarkan ekstensi string terpanjang
 def print_table(laptops):
-    w = [2, 4, 5, 8, 8, 5, 8, 3, 5]
+    w = [2, 4, 5, 8, 8, 5, 8, 3, 12] # Nilai 12 untuk padding minimum 'Ukuran Layar'
     
     for l in laptops:
         w[0] = max(w[0], len(l.get_id_produk()))
@@ -15,7 +16,8 @@ def print_table(laptops):
         w[8] = max(w[8], len(l.get_ukuran_layar()))
         
     separator = "-" * (sum(w) + 28)
-    header = f"| {'ID':<{w[0]}} | {'Merk':<{w[1]}} | {'Harga':<{w[2]}} | {'Kategori':<{w[3]}} | {'No. Seri':<{w[4]}} | {'Tahun':<{w[5]}} | {'Prosesor':<{w[6]}} | {'RAM':<{w[7]}} | {'Layar':<{w[8]}} |"
+    # Header disesuaikan
+    header = f"| {'ID':<{w[0]}} | {'Merk':<{w[1]}} | {'Harga':<{w[2]}} | {'Kategori':<{w[3]}} | {'No. Seri':<{w[4]}} | {'Tahun':<{w[5]}} | {'Prosesor':<{w[6]}} | {'RAM':<{w[7]}} | {'Ukuran Layar':<{w[8]}} |"
     
     print(f"\n{separator}\n{header}\n{separator}")
     for l in laptops:
@@ -23,57 +25,62 @@ def print_table(laptops):
     print(separator)
 
 def main():
+    # Menanamkan 5 Data Awal (Hardcode Simbol Inch)
     daftar_laptop = [
-        Laptop("L01", "Apple", 15000000, "SN01", 2024, "M3", "8GB", "13.6"),
-        Laptop("L02", "Lenovo", 12000000, "SN02", 2023, "Ryzen5", "16GB", "14.0"),
-        Laptop("L03", "Asus", 18000000, "SN03", 2024, "Intel-i7", "16GB", "15.6"),
-        Laptop("L04", "HP", 10000000, "SN04", 2022, "Intel-i5", "8GB", "14.0"),
-        Laptop("L05", "Acer", 9500000, "SN05", 2023, "Ryzen3", "8GB", "14.0")
+        Laptop("L01", "Apple", 15000000, "SN01", 2024, "M3", "8GB", "13.6'"),
+        Laptop("L02", "Lenovo", 12000000, "SN02", 2023, "Ryzen5", "16GB", "14.0'"),
+        Laptop("L03", "Asus", 18000000, "SN03", 2024, "Intel-i7", "16GB", "15.6'"),
+        Laptop("L04", "HP", 10000000, "SN04", 2022, "Intel-i5", "8GB", "14.0'"),
+        Laptop("L05", "Acer", 9500000, "SN05", 2023, "Ryzen3", "8GB", "14.0'")
     ]
 
+    # Validasi Input Iterasi (N)
     while True:
         try:
             n = int(input("Masukkan jumlah data tambahan (0 untuk skip): "))
             break 
         except ValueError:
-            print("input salah")
+            print("(Error: Menolak huruf pada variabel integer)")
 
     for i in range(n):
         print(f"\nData ke-{i+1}")
         id_p = input("ID: ")
         
-        # Validasi Merk: Menolak input jika isdigit() bernilai True
+        # Validasi Input: Memastikan 'merk' tidak berisi angka murni
         while True:
             merk = input("Merk: ")
             if merk.isdigit():
-                print("input salah")
+                print("(Error: Menolak angka murni pada atribut merk)")
             else:
                 break
         
-        # Validasi Harga: Int Python aman mengelola angka besar
+        # Validasi Input: 'harga' menangkap ValueError jika ada huruf
         while True:
             try:
                 harga = int(input("Harga: "))
                 break 
             except ValueError:
-                print("input salah") 
+                print("(Error: Menolak kehadiran huruf pada harga)") 
                 
         ns = input("No Seri: ")
         
+        # Validasi Input: 'tahun' menangkap ValueError jika ada huruf
         while True:
             try:
                 thn = int(input("Tahun: "))
                 break
             except ValueError:
-                print("input salah")
+                print("(Error: Menolak kehadiran huruf pada tahun)")
                 
         pros = input("Prosesor: ")
         ram = input("RAM: ")
-        lyr = input("Layar: ")
+        lyr = input("Ukuran Layar: ") # Nama antarmuka disesuaikan
         
         daftar_laptop.append(Laptop(id_p, merk, harga, ns, thn, pros, ram, lyr))
 
     print_table(daftar_laptop)
+    
+    # Menghapus referensi memori (Pemicu GC internal Python)
     del daftar_laptop
 
 if __name__ == "__main__":

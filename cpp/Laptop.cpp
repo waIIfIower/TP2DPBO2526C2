@@ -3,16 +3,15 @@
 #include "Hardware.cpp"
 using namespace std;
 
-// Derived Class (Level 3): Kelas turunan akhir spesifik untuk Laptop
+// Derived Class (Level 3): Klasifikasi spesifik untuk perangkat Laptop
 class Laptop : public Hardware {
 private:
     string jenisProsesor;
     string kapasitasRam;
-    string ukuranLayar;
+    string ukuranLayar; // Atribut untuk menyimpan dimensi ukuran layar
 
 public:
-    // OPTIMASI LOGIKA: Kategori di-hardcode menjadi "Laptop" ke kelas Hardware 
-    // sehingga user tidak perlu menginputkan kategori yang sudah pasti
+    // Konstruktor meneruskan string "Laptop" langsung ke kelas Hardware
     Laptop(string id, string m, long long h, string ns, int tr, string jp, string kr, string ul) 
         : Hardware(id, m, h, "Laptop", ns, tr) {
         this->jenisProsesor = jp;
@@ -22,7 +21,7 @@ public:
     
     ~Laptop() {}
 
-    // Accessor Methods spesifik Laptop
+    // Accessor Methods
     string getJenisProsesor() { return jenisProsesor; }
     void setJenisProsesor(string jp) { this->jenisProsesor = jp; }
 
@@ -32,7 +31,7 @@ public:
     string getUkuranLayar() { return ukuranLayar; }
     void setUkuranLayar(string ul) { this->ukuranLayar = ul; }
 
-    // Metode pencetakan baris dengan padding dinamis menerima array lebar 'w'
+    // Mencetak baris tabel dengan formating padding yang dinamis (w)
     void printRow(int w[]) {
         cout << "| " << left << setw(w[0]) << getIdProduk() 
              << " | " << setw(w[1]) << getMerk() 

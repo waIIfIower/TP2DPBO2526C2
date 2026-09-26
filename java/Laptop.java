@@ -4,7 +4,6 @@ public class Laptop extends Hardware {
     private String kapasitasRam;
     private String ukuranLayar;
 
-    // Parameter kategori dicabut, digantikan hardcode "Laptop" pada super()
     public Laptop(String idProduk, String merk, long hargaDasar, String nomorSeri, int tahunRilis, String jenisProsesor, String kapasitasRam, String ukuranLayar) {
         super(idProduk, merk, hargaDasar, "Laptop", nomorSeri, tahunRilis);
         this.jenisProsesor = jenisProsesor;
@@ -21,7 +20,7 @@ public class Laptop extends Hardware {
     public String getUkuranLayar() { return ukuranLayar; }
     public void setUkuranLayar(String ukuranLayar) { this.ukuranLayar = ukuranLayar; }
 
-    // Output baris berformat dinamis
+    // Merender baris tabel dengan interpolasi format '%-ws' 
     public void printRow(int[] w) {
         String format = "| %-" + w[0] + "s | %-" + w[1] + "s | %-" + w[2] + "d | %-" + w[3] + "s | %-" + w[4] + "s | %-" + w[5] + "d | %-" + w[6] + "s | %-" + w[7] + "s | %-" + w[8] + "s |\n";
         System.out.printf(format, getIdProduk(), getMerk(), getHargaDasar(), getKategori(), getNomorSeri(), getTahunRilis(), getJenisProsesor(), getKapasitasRam(), getUkuranLayar());

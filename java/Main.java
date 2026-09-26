@@ -3,9 +3,9 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
-    // Fungsi komputasi lebar kolom dan pencetakan tabel
+    // Fungsi khusus untuk merender List Objek ke dalam Tabel Dinamis CLI
     public static void printTable(ArrayList<Laptop> list) {
-        int[] w = {2, 4, 5, 8, 8, 5, 8, 3, 5};
+        int[] w = {2, 4, 5, 8, 8, 5, 8, 3, 12}; // Index 8 diatur lebar default 12 untuk "Ukuran Layar"
         
         for (Laptop l : list) {
             w[0] = Math.max(w[0], l.getIdProduk().length());
@@ -25,7 +25,8 @@ public class Main {
         String format = "| %-" + w[0] + "s | %-" + w[1] + "s | %-" + w[2] + "s | %-" + w[3] + "s | %-" + w[4] + "s | %-" + w[5] + "s | %-" + w[6] + "s | %-" + w[7] + "s | %-" + w[8] + "s |\n";
 
         System.out.println(separator);
-        System.out.printf(format, "ID", "Merk", "Harga", "Kategori", "No. Seri", "Tahun", "Prosesor", "RAM", "Layar");
+        // Header disesuaikan menjadi "Ukuran Layar"
+        System.out.printf(format, "ID", "Merk", "Harga", "Kategori", "No. Seri", "Tahun", "Prosesor", "RAM", "Ukuran Layar");
         System.out.println(separator);
         for (Laptop l : list) { l.printRow(w); }
         System.out.println(separator);
@@ -35,13 +36,16 @@ public class Main {
         ArrayList<Laptop> daftarLaptop = new ArrayList<>();
         Scanner sc = new Scanner(System.in);
 
-        daftarLaptop.add(new Laptop("L01", "Apple", 15000000L, "SN01", 2024, "M3", "8GB", "13.6"));
-        daftarLaptop.add(new Laptop("L02", "Lenovo", 12000000L, "SN02", 2023, "Ryzen5", "16GB", "14.0"));
-        daftarLaptop.add(new Laptop("L03", "Asus", 18000000L, "SN03", 2024, "Intel-i7", "16GB", "15.6"));
-        daftarLaptop.add(new Laptop("L04", "HP", 10000000L, "SN04", 2022, "Intel-i5", "8GB", "14.0"));
-        daftarLaptop.add(new Laptop("L05", "Acer", 9500000L, "SN05", 2023, "Ryzen3", "8GB", "14.0"));
+        // Penambahan simbol inch (') pada atribut ukuranLayar
+        daftarLaptop.add(new Laptop("L01", "Apple", 15000000L, "SN01", 2024, "M3", "8GB", "13.6'"));
+        daftarLaptop.add(new Laptop("L02", "Lenovo", 12000000L, "SN02", 2023, "Ryzen5", "16GB", "14.0'"));
+        daftarLaptop.add(new Laptop("L03", "Asus", 18000000L, "SN03", 2024, "Intel-i7", "16GB", "15.6'"));
+        daftarLaptop.add(new Laptop("L04", "HP", 10000000L, "SN04", 2022, "Intel-i5", "8GB", "14.0'"));
+        daftarLaptop.add(new Laptop("L05", "Acer", 9500000L, "SN05", 2023, "Ryzen3", "8GB", "14.0'"));
 
         int n = 0;
+        
+        // Validasi n (Batas iterasi penambahan data)
         while (true) {
             try {
                 System.out.print("Masukkan jumlah data tambahan (0 jika tidak ada): ");
@@ -49,7 +53,7 @@ public class Main {
                 sc.nextLine(); 
                 break;
             } catch (InputMismatchException e) {
-                System.out.println("input salah");
+                System.out.println("(Error: Menolak huruf pada variabel integer)");
                 sc.nextLine(); 
             }
         }
@@ -59,20 +63,20 @@ public class Main {
             System.out.print("ID: "); String id = sc.nextLine();
             
             String merk = "";
-            // Validasi Merk: Menolak jika bisa di-parse penuh menjadi Integer
+            // Validasi Merk
             while (true) {
                 System.out.print("Merk: ");
                 merk = sc.nextLine();
                 try {
-                    Integer.parseInt(merk);
-                    System.out.println("input salah");
+                    Integer.parseInt(merk); // Memicu error secara sengaja bila 100% angka
+                    System.out.println("(Error: Menolak angka murni pada atribut merk)");
                 } catch (NumberFormatException e) {
                     break; 
                 }
             }
             
             long harga = 0L;
-            // Validasi Harga: Try-catch nextLong()
+            // Validasi Harga (long)
             while (true) {
                 try {
                     System.out.print("Harga: ");
@@ -80,7 +84,7 @@ public class Main {
                     sc.nextLine();
                     break;
                 } catch (InputMismatchException e) {
-                    System.out.println("input salah"); 
+                    System.out.println("(Error: Menolak kehadiran huruf pada harga)"); 
                     sc.nextLine(); 
                 }
             }
@@ -88,7 +92,7 @@ public class Main {
             System.out.print("No Seri: "); String seri = sc.nextLine();
             
             int tahun = 0;
-            // Validasi Tahun: Try-catch nextInt()
+            // Validasi Tahun (int)
             while (true) {
                 try {
                     System.out.print("Tahun: ");
@@ -96,14 +100,16 @@ public class Main {
                     sc.nextLine();
                     break;
                 } catch (InputMismatchException e) {
-                    System.out.println("input salah"); 
+                    System.out.println("(Error: Menolak kehadiran huruf pada tahun)"); 
                     sc.nextLine(); 
                 }
             }
             
             System.out.print("Prosesor: "); String pros = sc.nextLine();
             System.out.print("RAM: "); String ram = sc.nextLine();
-            System.out.print("Layar: "); String layar = sc.nextLine();
+            
+            // Perubahan nama antarmuka Input
+            System.out.print("Ukuran Layar: "); String layar = sc.nextLine();
             
             daftarLaptop.add(new Laptop(id, merk, harga, seri, tahun, pros, ram, layar));
         }
@@ -111,6 +117,7 @@ public class Main {
         printTable(daftarLaptop);
         sc.close();
 
+        // Melepaskan referensi (Nullify) untuk membantu kerja Garbage Collector
         daftarLaptop.clear();
         daftarLaptop = null;
         System.gc();

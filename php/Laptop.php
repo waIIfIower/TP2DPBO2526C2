@@ -7,7 +7,6 @@ class Laptop extends Hardware {
     private $kapasitasRam;
     private $ukuranLayar;
 
-    // Hardcode "Laptop" diteruskan ke kelas Hardware
     public function __construct($idProduk, $merk, $hargaDasar, $fotoProduk, $nomorSeri, $tahunRilis, $jenisProsesor, $kapasitasRam, $ukuranLayar) {
         parent::__construct($idProduk, $merk, $hargaDasar, $fotoProduk, "Laptop", $nomorSeri, $tahunRilis);
         $this->jenisProsesor = $jenisProsesor;

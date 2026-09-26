@@ -1,10 +1,58 @@
-ID: L06
-Merk: Dell
-Harga: 14000000
-Link Foto: img/dell.png
-Kategori: Laptop
-No Seri: SN06
-Tahun: 2024
-Prosesor: Intel-i7
-RAM: 16GB
-Layar: 14.0
+======================================================
+SKENARIO PENGUJIAN ERROR HANDLING (CLI)
+======================================================
+Penjelasan Input Salah yang disimulasikan:
+1. Jumlah Data  : "satu"    (Error: Menolak huruf pada variabel integer)
+2. Merk         : "12345"   (Error: Menolak angka murni pada atribut merk)
+3. Harga        : "14jutak" (Error: Menolak kehadiran huruf pada harga)
+4. Tahun        : "2024A"   (Error: Menolak kehadiran huruf pada tahun)
+
+======================================================
+INPUT TERMINAL (Copy-paste seluruh baris di bawah ini)
+======================================================
+1
+L06
+Dell
+9834298432243432
+SN06
+2024
+Intel-i7
+16GB
+14.0'
+
+
+
+======================================================
+SKENARIO PENGUJIAN ERROR HANDLING (WEB FORM PHP)
+======================================================
+Untuk menguji validasi, isikan form dengan data berikut:
+
+[ CONTOH INPUT SALAH ]
+Masukkan data berikut lalu klik "Tambah Data" untuk 
+memicu peringatan "input salah" pada bagian atas form:
+- ID        : L06
+- Merk      : 12345           <-- (Akan ditolak: Merk angka murni)
+- Harga     : 14jutak         <-- (Akan ditolak: Mengandung huruf)
+- Link Foto : img/dell.png
+- No Seri   : SN06
+- Tahun     : 2024A           <-- (Akan ditolak: Mengandung huruf)
+- Prosesor  : Intel-i7
+- RAM       : 16GB
+- Layar     : 14.0'
+
+[ CONTOH INPUT BENAR ]
+Setelah error terpicu, perbaiki data pada form menjadi 
+seperti di bawah ini lalu klik "Tambah Data" kembali:
+- ID        : L06
+- Merk      : Dell
+- Harga     : 9834298432243432
+- Link Foto : img/dell.png
+- No Seri   : SN06
+- Tahun     : 2024
+- Prosesor  : Intel-i7
+- RAM       : 16GB
+- Layar     : 14.0'
+
+Data di atas akan sukses ter-submit dan masuk ke dalam 
+tabel dinamis tanpa mengalami error Integer Overflow.
+======================================================
