@@ -2,10 +2,6 @@
 Saya Muhammad Dzaka Indrianto dengan NIM 2508755 mengerjakan Tugas Praktikum 1 dalam mata kuliah Desain dan Pemrograman Berorientasi Objek untuk keberkahanNya maka saya tidak melakukan kecurangan seperti yang telah dispesifikasikan. Aamiin.
 
 # Struktur Program
-Repositori ini disusun dengan pemisahan direktori yang terstruktur antara kode sumber utama (Program) dan tangkapan layar pengujian (Dokumentasi). Seluruh aset dokumentasi dikumpulkan ke dalam satu direktori master `Dokumentasi` di *root* repositori.
-
-Berikut adalah struktur hierarki dari repositori ini:
-
 ```text
 Main/
 ├── Dokumentasi/
@@ -77,7 +73,6 @@ Main/
 ![Diagram Kelas Produk IT](Dokumentasi/desaindiagram.png)
 
 ## Penjelasan Desain
-Program ini mengimplementasikan paradigma *Object-Oriented Programming* (OOP) dengan desain **Multilevel Inheritance** (Pewarisan Bertingkat). Desain ini memecah entitas ke dalam tiga level kelas yang spesifik, di mana masing-masing kelas memiliki minimal 3 atribut untuk memenuhi spesifikasi tugas:
 
 1. **`ProdukIT` (Base Class / Level 1)**
    Berperan sebagai super-kelas tertinggi yang menyimpan properti identitas produk secara universal.
@@ -99,8 +94,7 @@ Program ini mengimplementasikan paradigma *Object-Oriented Programming* (OOP) de
    *   **Optimasi Alur (Hardcoding State):** Pada konstruktor kelas ini, nilai untuk parameter *kategori* langsung di-*hardcode* dengan *string* `"Laptop"` menuju kelas induk. Hal ini memastikan konsistensi data dan meningkatkan pengalaman pengguna agar tidak perlu memasukkan data "kategori" yang sudah pasti berstatus Laptop secara berulang kali.
 
 # Eror Handling
-
-Program ini dilengkapi dengan mekanisme pelindung (*Robust Error Handling*) yang ketat untuk memastikan tidak ada kesalahan input yang merusak aliran program, struktur memori, atau manipulasi *database array*.
+!Bagian ukuran layar bisa memasukkan input berupa karkater untuk mengantisipasi kalo input bukan inch!
 
 ## Java, C++, dan Python (CLI)
 Pada program berbasis *Command Line Interface*, validasi mencegah karakter anomali masuk ke dalam memori. Jika terjadi pelanggaran, program akan membersihkan antrean input (*buffer flush*), menahan eksekusi di baris yang sama, dan mencetak peringatan berikut:
